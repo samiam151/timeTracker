@@ -1,0 +1,30 @@
+@model IEnumerable<Tasks>
+@{
+    var error = ViewData.ContainsKey("Error") ? (Exception)ViewData["Error"] : null;
+    
+}
+@if (error != null)
+{
+    <div class="error">
+        <p>@error.Message</p>
+        <p>@error.StackTrace</p>
+    </div>
+}
+
+<div class="addTask">
+    <a asp-controller="Tasks" asp-action="AddTask" class="">Add a Task</a>
+</div>
+
+<div class="tasks">
+    @foreach (Tasks tasks in Model)
+    {
+        string detailsLink = "/tasks/" + tasks.id;
+
+        <div class="task">
+            <a href="@detailsLink">@tasks.name</a>
+            <p>@tasks.id</p>
+            <p>@tasks.userId</p>
+            <time datetime="@tasks.timeSpent">@tasks.timeSpent</time>
+        </div>
+    }
+</div>
