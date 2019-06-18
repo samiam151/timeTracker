@@ -8,6 +8,7 @@ using TimeTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using TimeTracker.Data;
+using TimeTracker.Services;
 
 namespace TimeTracker.Controllers {
 
@@ -16,9 +17,12 @@ namespace TimeTracker.Controllers {
     {
         private ApplicationDbContext _context;
 
-        public UserController(ApplicationDbContext context)
+        private UserService userService;
+
+        public UserController(ApplicationDbContext context, UserService _us)
         {
             _context = context;
+            userService = _us;
         }
      
         [HttpGet]
@@ -28,9 +32,10 @@ namespace TimeTracker.Controllers {
         }
 
         [HttpGet]
-        public ActionResult<string> Current() 
+        public async Task<IActionResult> Current() 
         {
-            return User.Identity.Name;
+            var user = await userService.GetCurrentUser();
+            return Json(user);
         }
     }
 }
