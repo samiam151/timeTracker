@@ -59,11 +59,11 @@ namespace TimeTracker.Controllers
 
         [HttpPost]
         [Route("tasks/add")]
-        public async Task<ActionResult> AddTask(string name)
+        public async Task<ActionResult> AddTask(string name, string description = null)
         {
             try
             {
-                var task = await TaskService.AddTask(name);
+                var task = await TaskService.AddTask(name, description);
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)
@@ -71,6 +71,13 @@ namespace TimeTracker.Controllers
                 ViewData["Error"] = ex;
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpGet]
+        public IActionResult DeleteTask(int id)
+        {
+            TaskService.DeleteTask(id);
+            return RedirectToAction("Index");
         }
     }
 }

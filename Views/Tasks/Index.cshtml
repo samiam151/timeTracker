@@ -12,7 +12,7 @@
 }
 
 <div class="addTask">
-    <a asp-controller="Tasks" asp-action="AddTask" class="">Add a Task</a>
+    <a asp-controller="Tasks" asp-action="AddTask" class="button">Add a Task</a>
 </div>
 
 <div class="tasks">
@@ -21,10 +21,19 @@
         string detailsLink = "/tasks/" + tasks.id;
 
         <div class="task">
-            <a href="@detailsLink">@tasks.name</a>
+            <div>
+                <a href="@detailsLink">@tasks.name</a>
+                @if (!String.IsNullOrEmpty(tasks.description)) {
+                    <p><i>@tasks.description</i></p>
+                }
+            </div>
             <p>@tasks.id</p>
             <p>@tasks.userId</p>
             <time datetime="@tasks.timeSpent">@tasks.timeSpent</time>
+
+            <div>
+                <a class="button" asp-route-id="@tasks.id" asp-action="DeleteTask" asp-controller="Tasks">Delete</a>
+            </div>
         </div>
     }
 </div>

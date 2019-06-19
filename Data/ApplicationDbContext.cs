@@ -23,6 +23,10 @@ namespace TimeTracker.Data
                 .Property(task => task.timeSpent)
                 .HasDefaultValue(TimeSpan.Zero);
 
+            modelBuilder.Entity<Tasks>()
+                .Property(task => task.description)
+                .HasDefaultValue("No description");
+
             modelBuilder.Entity<User>()
                 .HasKey(b => b.Id);
 

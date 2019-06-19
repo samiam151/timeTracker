@@ -66,7 +66,7 @@ namespace TimeTracker.Services
             return userObj;
         }
 
-        public async Task<Tasks> AddTask(string taskName) { 
+        public async Task<Tasks> AddTask(string taskName, string taskDescription) { 
             using (_context)
             {    
                 try
@@ -74,6 +74,7 @@ namespace TimeTracker.Services
                     var user = await userService.GetCurrentUser();
                     Tasks _task = new Tasks {
                         name = taskName,
+                        description = taskDescription,
                         userId = user.Id
                     };
 
@@ -81,6 +82,23 @@ namespace TimeTracker.Services
                     _context.SaveChanges();
 
                     return _task;
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void DeleteTask(int id)
+        {
+            using (_context)
+            {
+                try
+                {
+                    var taskToDelete = _context.Tasks.Find(id);
+                    _context.Tasks.Remove(taskToDelete);
+                    _context.SaveChanges();
                 }
                 catch (System.Exception)
                 {

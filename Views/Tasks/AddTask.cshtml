@@ -1,6 +1,11 @@
 @model Tasks
 
 <form method="post" action="/tasks/add">
+    @Html.LabelFor(t => t.name)
     @Html.TextAreaFor(t => t.name)
+
+    @Html.LabelFor(t => t.description)
+    @Html.TextAreaFor(t => t.description)
+    
     <input type="submit" value="Add Task"/>
 </form>
